@@ -10,9 +10,14 @@ var gravity = 12.0
 var velocity_y = 0.0
 var is_grounded = true
 
+var is_climbing = false
+
+func _ready():
+	# Disabled by default, VRDesktopSwitch will enable if desktop mode
+	set_process(false)
 
 func _process(delta):
-	if Player == null:
+	if Player == null or is_climbing:
 		return
 
 	var player = get_node(Player)

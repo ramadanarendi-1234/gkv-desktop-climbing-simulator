@@ -17,8 +17,32 @@ var right_hand_is_holding = false
 var right_hand_last_position : Vector3
 var fall_velocity : float = 0.0
 
+var desktop_mode = false
+var has_grabbed_once = false
+
+signal first_grab
+signal player_fell
+signal player_height_changed(y)
+
+func force_release():
+	left_hand_is_holding = false
+	right_hand_is_holding = false
+	if left_hand_node:
+		left_hand_node.is_holding = false
+	if right_hand_node:
+		right_hand_node.is_holding = false
+
+func reset_position():
+	if origin_node:
+		origin_node.global_transform.origin = Vector3.ZERO
+		fall_velocity = 0.0
+	has_grabbed_once = false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if origin_node:
+		emit_signal("player_height_changed", origin_node.global_transform.origin.y)
+		
 	var delta_movement : Vector3
 	var hands_holding = 0
 	
@@ -42,6 +66,13 @@ func _process(delta):
 			delta_movement += right_hand_node.global_transform.origin - right_hand_last_position
 			hands_holding = hands_holding + 1
 
+	if desktop_mode:
+		# In desktop mode, DesktopMovement handles gravity and DesktopClimb handles climbing
+		# We just need to check for falls below -5.0 or hitting the ground
+		if origin_node and origin_node.global_transform.origin.y < -5.0:
+			emit_signal("player_fell")
+		return
+
 	if origin_node:
 		# are we holding atleast one hand? then adjust our origin point accordingly
 		if hands_holding > 0:
@@ -53,11 +84,17 @@ func _process(delta):
 			
 			# move any hand anchor that is currently holding
 			if left_hand_is_holding:
+				if not has_grabbed_once:
+					has_grabbed_once = true
+					emit_signal("first_grab")
 				var anchor = left_hand_node.get_node("HandAnchor")
 				if anchor:
 					anchor.global_transform.origin += delta_movement
 
 			if right_hand_is_holding:
+				if not has_grabbed_once:
+					has_grabbed_once = true
+					emit_signal("first_grab")
 				var anchor = right_hand_node.get_node("HandAnchor")
 				if anchor:
 					anchor.global_transform.origin += delta_movement
@@ -69,11 +106,11 @@ func _process(delta):
 			
 			fall_velocity += delta * gravity
 			y -= fall_velocity * delta
-			if y < 0:
-				# should check if we hit the ground hard enough that we died....
-				y = 0
+			if y < -5.0:
+				emit_signal("player_fell")
 			
 			origin_node.global_transform.origin.y = y
+
 
 	if left_hand_is_holding:
 		left_hand_last_position = left_hand_node.global_transform.origin
