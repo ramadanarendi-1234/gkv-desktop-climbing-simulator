@@ -13,6 +13,9 @@ func _ready():
 	camera = get_node(camera_path)
 
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	set_process(false)
+	set_process_input(false)
+
 
 func _input(event):
 	if event is InputEventMouseMotion:
