@@ -24,6 +24,10 @@ config/name="Godot VR Climb Demo"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+RunHistory="*res://RunHistory.gd"
+
 [display]
 
 window/size/fullscreen=true
