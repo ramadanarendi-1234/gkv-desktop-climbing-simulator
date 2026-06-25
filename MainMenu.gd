@@ -10,7 +10,7 @@ func _ready():
 # Fungsi ini akan berjalan saat tombol Start Game diklik
 func _on_StartButton_pressed():
 	# Ganti "res://Lobbly.tscn" di bawah ini dengan nama file scene gameplay utamamu!
-	get_tree().change_scene("res://Lobbly.tscn")
+	get_tree().change_scene("res://Main.tscn")
 
 # Fungsi ini akan berjalan saat tombol Exit diklik
 func _on_ExitButton_pressed():

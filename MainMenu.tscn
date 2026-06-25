@@ -21,14 +21,14 @@ margin_right = 232.0
 margin_bottom = 217.0
 text = "Desktop Climbing Simulator"
 
-[node name="StartButton" type="Label" parent="Control"]
+[node name="StartButton" type="Button" parent="Control"]
 margin_left = 53.0
 margin_top = 107.0
 margin_right = 124.0
 margin_bottom = 121.0
 text = "Start Game"
 
-[node name="ExitButton" type="Label" parent="Control"]
+[node name="ExitButton" type="Button" parent="Control"]
 margin_left = 57.0
 margin_top = 163.0
 margin_right = 97.0
