@@ -17,7 +17,12 @@ func _ready():
 	set_process(false)
 
 func _process(delta):
-	if Player == null or is_climbing:
+	if Player == null:
+		return
+
+	if is_climbing:
+		is_grounded = false
+		velocity_y = 0
 		return
 
 	var player = get_node(Player)
@@ -52,12 +57,14 @@ func _process(delta):
 		velocity_y = jump_force
 		is_grounded = false
 
-# Gravity
+	# Gravity
 	velocity_y -= gravity * delta
 	player.translation.y += velocity_y * delta
 
-# Ground check
+	# Ground check
 	if player.translation.y <= 0:
 		player.translation.y = 0
 		velocity_y = 0
 		is_grounded = true
+	else:
+		is_grounded = false

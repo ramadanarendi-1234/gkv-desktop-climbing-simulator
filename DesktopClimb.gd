@@ -1,6 +1,6 @@
 extends Spatial
 
-export var climb_distance = 4.0
+export var climb_distance = 1.5
 export var climb_speed = 3.0
 
 var left_hand_hold : Spatial = null
