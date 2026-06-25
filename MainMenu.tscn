@@ -35,7 +35,6 @@ margin_right = 232.0
 margin_bottom = 264.0
 text = "Total Attempts: 0"
 
-
 [node name="StartButton" type="Button" parent="Control"]
 margin_left = 53.0
 margin_top = 107.0

@@ -103,6 +103,3 @@ func _on_grab():
 	if not has_grabbed_once:
 		has_grabbed_once = true
 		emit_signal("first_grab")
-		var mc = player.get_node_or_null("MovementControl")
-		if mc and mc.has_user_signal("first_grab"):
-			mc.emit_signal("first_grab")

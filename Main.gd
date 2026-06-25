@@ -13,9 +13,22 @@ func _ready():
 		movement_control.connect("player_fell", self, "_on_player_fell")
 		movement_control.connect("player_height_changed", self, "_on_player_height_changed")
 		
+	var desktop_climb = $Player.get_node_or_null("DesktopClimb")
+	if desktop_climb:
+		desktop_climb.connect("first_grab", self, "_on_first_grab")
+		
 	var summit_zone = get_node_or_null("SummitZone")
 	if summit_zone:
 		summit_zone.connect("summit_reached", self, "_on_summit_reached")
+
+func _process(delta):
+	# Fall detection for desktop mode (hitting the ground while climbing)
+	if state == GameState.CLIMBING:
+		var desktop_move = $Player.get_node_or_null("DesktopMovement")
+		if desktop_move and desktop_move.is_grounded:
+			var desktop_climb = $Player.get_node_or_null("DesktopClimb")
+			if desktop_climb and not desktop_climb.is_climbing:
+				_on_player_fell()
 
 func _input(event):
 	if event is InputEventKey and event.scancode == KEY_ESCAPE:
