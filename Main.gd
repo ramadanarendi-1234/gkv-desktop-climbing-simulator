@@ -54,7 +54,7 @@ func _on_player_fell():
 	if state == GameState.CLIMBING:
 		state = GameState.FELL
 		RunHistory.save_run(hud.current_time, false)
-		reset_run()
+	reset_run()
 
 func _on_summit_reached():
 	if state == GameState.CLIMBING:

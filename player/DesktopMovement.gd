@@ -61,9 +61,19 @@ func _process(delta):
 	velocity_y -= gravity * delta
 	player.translation.y += velocity_y * delta
 
+	# Raycast for ground height
+	var space_state = player.get_world().direct_space_state
+	var ray_start = player.global_transform.origin + Vector3(0, 1.0, 0)
+	var ray_end = player.global_transform.origin + Vector3(0, -100.0, 0)
+	var result = space_state.intersect_ray(ray_start, ray_end, [], 1) # collision mask 1
+	
+	var ground_y = -1000.0
+	if result:
+		ground_y = result.position.y
+
 	# Ground check
-	if player.translation.y <= 0:
-		player.translation.y = 0
+	if player.global_transform.origin.y <= ground_y + 0.01:
+		player.global_transform.origin.y = ground_y
 		velocity_y = 0
 		is_grounded = true
 	else:

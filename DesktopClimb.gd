@@ -95,6 +95,11 @@ func _process(delta):
 		target_pos /= holds_count
 		target_pos += Vector3(0, -1.0, 0) # Head offset below hand
 		
+		var hold_flat = Vector3(target_pos.x, 0, target_pos.z)
+		var away_dir = hold_flat.direction_to(Vector3.ZERO)
+		if away_dir.length() > 0.01:
+			target_pos += away_dir * 0.8
+		
 		var move_dir = (target_pos - player.global_transform.origin)
 		if move_dir.length() > 0.05:
 			player.global_transform.origin += move_dir.normalized() * climb_speed * delta
