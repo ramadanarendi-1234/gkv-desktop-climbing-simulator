@@ -15,9 +15,24 @@ onready var camera = player.get_node("ARVRCamera") if player and player.has_node
 var last_highlighted = null
 signal first_grab
 
+var left_hand_mesh = null
+var right_hand_mesh = null
+
 func _ready():
 	# Disabled by default, VRDesktopSwitch will enable if desktop mode
 	set_process(false)
+	
+	if camera:
+		var hand_scene = load("res://player/HandMesh.tscn")
+		if hand_scene:
+			left_hand_mesh = hand_scene.instance()
+			camera.call_deferred("add_child", left_hand_mesh)
+			left_hand_mesh.translation = Vector3(-0.3, -0.3, -0.5)
+			
+			right_hand_mesh = hand_scene.instance()
+			camera.call_deferred("add_child", right_hand_mesh)
+			right_hand_mesh.translation = Vector3(0.3, -0.3, -0.5)
+			right_hand_mesh.scale.x = -1 # mirror for right hand
 
 func _process(delta):
 	if not player or not camera:
@@ -57,7 +72,28 @@ func _process(delta):
 			best_hold.highlight()
 		last_highlighted = best_hold
 
-	if Input.is_key_pressed(KEY_Q):
+	# Desktop input
+	var q_pressed = Input.is_key_pressed(KEY_Q)
+	var e_pressed = Input.is_key_pressed(KEY_E)
+
+	# Hand animation
+	if left_hand_mesh:
+		if q_pressed:
+			left_hand_mesh.grab = 1.0
+			left_hand_mesh.translation.z = -0.6
+		else:
+			left_hand_mesh.grab = 0.0
+			left_hand_mesh.translation.z = -0.5
+				
+	if right_hand_mesh:
+		if e_pressed:
+			right_hand_mesh.grab = 1.0
+			right_hand_mesh.translation.z = -0.6
+		else:
+			right_hand_mesh.grab = 0.0
+			right_hand_mesh.translation.z = -0.5
+
+	if q_pressed:
 		if not left_hand_hold and best_hold:
 			left_hand_hold = best_hold
 			_on_grab()
