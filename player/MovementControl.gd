@@ -32,10 +32,10 @@ func force_release():
 	if right_hand_node:
 		right_hand_node.is_holding = false
 
-func reset_position():
-	if origin_node:
+func reset_position(teleport = true):
+	if origin_node and teleport:
 		origin_node.global_transform.origin = Vector3.ZERO
-		fall_velocity = 0.0
+	fall_velocity = 0.0
 	has_grabbed_once = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

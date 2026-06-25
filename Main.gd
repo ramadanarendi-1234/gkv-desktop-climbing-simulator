@@ -28,17 +28,17 @@ func _process(delta):
 		if desktop_move and desktop_move.is_grounded:
 			var desktop_climb = $Player.get_node_or_null("DesktopClimb")
 			if desktop_climb and not desktop_climb.is_climbing:
-				_on_player_fell()
+				_fail_run(false)
 
 func _input(event):
 	if event is InputEventKey and event.scancode == KEY_ESCAPE:
 		get_tree().quit()
 		
 	if event is InputEventKey and event.scancode == KEY_R and event.pressed:
-		reset_run()
+		reset_run(true)
 		
 	if event is InputEventJoypadButton and event.button_index == 1 and event.pressed:
-		reset_run()
+		reset_run(true)
 
 func _on_first_grab():
 	if state == GameState.WAITING:
@@ -51,10 +51,13 @@ func _on_player_height_changed(y):
 		hud.update_height(y)
 
 func _on_player_fell():
+	_fail_run(true)
+
+func _fail_run(teleport: bool):
 	if state == GameState.CLIMBING:
 		state = GameState.FELL
 		RunHistory.save_run(hud.current_time, false)
-	reset_run()
+	reset_run(teleport)
 
 func _on_summit_reached():
 	if state == GameState.CLIMBING:
@@ -67,17 +70,21 @@ func _on_summit_reached():
 			var is_new_pb = (prev_pb < 0) or (new_pb < prev_pb)
 			hud.show_results(is_new_pb)
 
-func reset_run():
+func reset_run(teleport = true):
 	state = GameState.WAITING
 	if movement_control:
 		movement_control.force_release()
-		movement_control.reset_position()
+		movement_control.reset_position(teleport)
 	
 	var desktop_climb = $Player.get_node_or_null("DesktopClimb")
 	if desktop_climb:
 		desktop_climb.has_grabbed_once = false
 		desktop_climb.left_hand_hold = null
 		desktop_climb.right_hand_hold = null
+		
+	var desktop_move = $Player.get_node_or_null("DesktopMovement")
+	if desktop_move and desktop_move.kb and teleport:
+		desktop_move.kb.global_transform.origin = Vector3.ZERO
 		
 	if hud:
 		hud.reset_timer()
