@@ -6,7 +6,7 @@ onready var music_slider = $Panel/MusicVolume/MusicSlider
 onready var music_val_label = $Panel/MusicVolume/MusicValueLabel
 onready var sfx_slider = $Panel/SFXVolume/SFXSlider
 onready var sfx_val_label = $Panel/SFXVolume/SFXValueLabel
-onready var back_button = $Panel/BackButton
+onready var back_button = $BackButton
 
 func _ready():
 	# Retrieve initial volume values from AudioManager
@@ -30,7 +30,9 @@ func _ready():
 	UITheme.style_label($Panel/ControlsLabel, 22, UITheme.COLOR_TEXT_DARK)
 	UITheme.style_button(back_button)
 	
-	# Style volume labels
+	# Style volume sliders and labels
+	UITheme.style_slider(music_slider)
+	UITheme.style_slider(sfx_slider)
 	UITheme.style_label($Panel/MusicVolume/Label, 18, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_label($Panel/SFXVolume/Label, 18, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_label($Panel/MusicVolume/MusicValueLabel, 16, UITheme.COLOR_TEXT_MUTED)
@@ -43,10 +45,20 @@ func _ready():
 	sep_style.content_margin_bottom = 1
 	$Panel/Separator.add_stylebox_override("separator", sep_style)
 	
-	# Style controls grid labels
-	for child in $Panel/GridContainer.get_children():
+	# Style controls grid labels (Action = normal label, Key = blue box label)
+	var children = $Panel/GridContainer.get_children()
+	for i in range(children.size()):
+		var child = children[i]
 		if child is Label:
-			UITheme.style_label(child, 16, UITheme.COLOR_TEXT_MUTED)
+			if i < 2:
+				# Headers: "Action", "Control / Key"
+				UITheme.style_label(child, 16, UITheme.COLOR_TEXT_DARK)
+			elif i % 2 == 0:
+				# Even index (excluding headers) -> Action description
+				UITheme.style_label(child, 16, UITheme.COLOR_TEXT_DARK)
+			else:
+				# Odd index (excluding headers) -> Control Key (blue bg box)
+				UITheme.style_key_box(child, 14)
 
 func _on_MusicSlider_value_changed(value):
 	AudioManager.set_music_volume(value)

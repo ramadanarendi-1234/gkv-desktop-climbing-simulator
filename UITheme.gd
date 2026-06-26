@@ -98,3 +98,58 @@ func style_label_with_pill(label: Label, pill_color: Color, font_size: int = 22)
 	label.add_stylebox_override("normal", pill)
 	label.add_font_override("font", get_font(font_size))
 	label.add_color_override("font_color", COLOR_TEXT_WHITE)
+
+func get_star_texture(size: int = 24, color: Color = Color(0.85, 0.15, 0.45)) -> ImageTexture:
+	var img = Image.new()
+	img.create(size, size, false, Image.FORMAT_RGBA8)
+	img.lock()
+	var center = size / 2.0
+	for y in range(size):
+		for x in range(size):
+			var nx = (x - center + 0.5) / (size / 2.0)
+			var ny = (y - center + 0.5) / (size / 2.0)
+			var dist = sqrt(abs(nx)) + sqrt(abs(ny))
+			if dist <= 1.0:
+				var alpha = clamp((1.0 - dist) * 4.0, 0.0, 1.0)
+				img.set_pixel(x, y, Color(color.r, color.g, color.b, alpha))
+			else:
+				img.set_pixel(x, y, Color(0, 0, 0, 0))
+	img.unlock()
+	var tex = ImageTexture.new()
+	tex.create_from_image(img)
+	return tex
+
+func style_slider(slider: HSlider):
+	var track_bg = StyleBoxFlat.new()
+	track_bg.bg_color = Color(0.75, 0.82, 0.90, 1.0)
+	track_bg.corner_radius_top_left = 4
+	track_bg.corner_radius_top_right = 4
+	track_bg.corner_radius_bottom_left = 4
+	track_bg.corner_radius_bottom_right = 4
+	track_bg.expand_margin_top = 3
+	track_bg.expand_margin_bottom = 3
+	
+	var track_active = StyleBoxFlat.new()
+	track_active.bg_color = COLOR_TEAL
+	track_active.corner_radius_top_left = 4
+	track_active.corner_radius_top_right = 4
+	track_active.corner_radius_bottom_left = 4
+	track_active.corner_radius_bottom_right = 4
+	track_active.expand_margin_top = 3
+	track_active.expand_margin_bottom = 3
+	
+	slider.add_stylebox_override("slider", track_bg)
+	slider.add_stylebox_override("grabber_area", track_active)
+	slider.add_stylebox_override("grabber_area_highlight", track_active)
+	
+	var star_tex = get_star_texture(20, Color(0.85, 0.15, 0.45))
+	slider.add_icon_override("grabber", star_tex)
+	slider.add_icon_override("grabber_highlight", star_tex)
+
+func style_key_box(label: Label, font_size: int = 14):
+	var box = _make_box(COLOR_TEAL, 4, Color.transparent, 0, 8, 4)
+	label.add_stylebox_override("normal", box)
+	label.add_font_override("font", get_font(font_size))
+	label.add_color_override("font_color", COLOR_TEXT_WHITE)
+	label.align = Label.ALIGN_CENTER
+
