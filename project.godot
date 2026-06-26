@@ -21,8 +21,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot VR Climb Demo"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://MainMenu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+RunHistory="*res://RunHistory.gd"
 
 [display]
 
@@ -31,6 +35,11 @@ window/size/fullscreen=true
 [gdnative]
 
 singletons=[ "res://addons/godot-openxr/config/godot_openxr.gdnlib" ]
+
+[global]
+
+external\=false
+external=false
 
 [physics]
 

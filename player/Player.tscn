@@ -7,6 +7,8 @@
 [ext_resource path="res://player/HandMesh.tscn" type="PackedScene" id=5]
 [ext_resource path="res://player/DesktopMovement.gd" type="Script" id=6]
 [ext_resource path="res://player/DesktopLook.gd" type="Script" id=7]
+[ext_resource path="res://DesktopClimb.gd" type="Script" id=8]
+[ext_resource path="res://player/VRDesktopSwitch.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleMesh" id=1]
 radius = 0.2
@@ -61,6 +63,12 @@ Player = NodePath("..")
 script = ExtResource( 7 )
 player_path = NodePath("..")
 camera_path = NodePath("../ARVRCamera")
+
+[node name="DesktopClimb" type="Spatial" parent="."]
+script = ExtResource( 8 )
+
+[node name="VRDesktopSwitch" type="Node" parent="."]
+script = ExtResource( 9 )
 
 [connection signal="button_pressed" from="RightHandController" to="MovementControl" method="_on_RightHandController_button_pressed"]
 [connection signal="button_release" from="RightHandController" to="MovementControl" method="_on_RightHandController_button_release"]

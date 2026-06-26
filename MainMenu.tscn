@@ -27,14 +27,28 @@ margin_right = 232.0
 margin_bottom = 217.0
 text = "Desktop Climbing Simulator"
 
-[node name="StartButton" type="Label" parent="Control"]
+[node name="PBLabel" type="Label" parent="Control"]
+margin_left = 54.0
+margin_top = 230.0
+margin_right = 232.0
+margin_bottom = 244.0
+text = "Personal Best: --:--.--"
+
+[node name="AttemptLabel" type="Label" parent="Control"]
+margin_left = 54.0
+margin_top = 250.0
+margin_right = 232.0
+margin_bottom = 264.0
+text = "Total Attempts: 0"
+
+[node name="StartButton" type="Button" parent="Control"]
 margin_left = 53.0
 margin_top = 107.0
 margin_right = 124.0
 margin_bottom = 121.0
 text = "Start Game"
 
-[node name="ExitButton" type="Label" parent="Control"]
+[node name="ExitButton" type="Button" parent="Control"]
 margin_left = 57.0
 margin_top = 163.0
 margin_right = 97.0
