@@ -13,6 +13,16 @@ func _ready():
 	$Control/Panel/NextButton.connect("pressed", self, "_on_NextButton_pressed")
 	$Control/Panel/BackButton.connect("pressed", self, "_on_BackButton_pressed")
 	$Control/Panel/SkipButton.connect("pressed", self, "_on_SkipButton_pressed")
+	
+	# Apply teal/blue theme
+	UITheme.style_panel_dark($Control/Panel)
+	UITheme.style_label_with_pill($Control/Panel/TitleLabel, UITheme.COLOR_TITLE_PILL, 26)
+	UITheme.style_label_with_pill($Control/Panel/BodyLabel, UITheme.COLOR_BODY_PILL, 17)
+	UITheme.style_label($Control/Panel/PageLabel, 18, UITheme.COLOR_TEXT_LIGHT)
+	$Control/Panel/Separator.visible = false
+	UITheme.style_button($Control/Panel/NextButton, 18)
+	UITheme.style_button($Control/Panel/BackButton, 18)
+	UITheme.style_button($Control/Panel/SkipButton, 14)
 
 func _setup_pages():
 	pages = [

@@ -21,6 +21,20 @@ func _ready():
 			pb_label.text = "PB: --:--.--"
 		else:
 			pb_label.text = "PB: " + format_time(pb)
+	
+	# Apply teal/blue theme to HUD labels
+	UITheme.style_label(height_label, 20)
+	UITheme.style_label(timer_label, 20)
+	UITheme.style_label(pb_label, 16, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label(objective_label, 18)
+	
+	# Style results panel
+	UITheme.style_panel_dark(results_panel)
+	UITheme.style_label(results_panel.get_node("Title"), 22)
+	UITheme.style_label(results_panel.get_node("TimeValue"), 24)
+	UITheme.style_label(results_panel.get_node("PBValue"), 18, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label(results_panel.get_node("AttemptValue"), 16, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label(results_panel.get_node("RestartLabel"), 14, UITheme.COLOR_TEXT_LIGHT)
 
 func _process(delta):
 	if timer_running:

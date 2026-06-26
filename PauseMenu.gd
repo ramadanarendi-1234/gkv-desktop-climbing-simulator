@@ -12,6 +12,14 @@ func _ready():
 	
 	# Hubungkan signal closed settings
 	$Control/SettingsMenu.connect("closed", self, "_on_SettingsMenu_closed")
+	
+	# Apply teal/blue theme
+	UITheme.style_panel_dark($Control/Panel)
+	UITheme.style_label($Control/Panel/PauseLabel, 32)
+	UITheme.style_button($Control/Panel/ResumeButton)
+	UITheme.style_button($Control/Panel/RestartButton)
+	UITheme.style_button($Control/Panel/SettingsButton)
+	UITheme.style_button($Control/Panel/ExitButton)
 
 func _input(event):
 	# Jika menekan tombol ESC (ui_cancel)

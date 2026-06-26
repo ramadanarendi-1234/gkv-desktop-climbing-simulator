@@ -23,6 +23,30 @@ func _ready():
 	
 	# Connect button hover signals to play click sound if needed
 	back_button.connect("mouse_entered", self, "_on_button_hover")
+	
+	# Apply teal/blue theme
+	UITheme.style_panel_dark($Panel)
+	UITheme.style_label($Panel/TitleLabel, 26)
+	UITheme.style_label($Panel/ControlsLabel, 22)
+	UITheme.style_button(back_button)
+	
+	# Style volume labels
+	UITheme.style_label($Panel/MusicVolume/Label, 18, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Panel/SFXVolume/Label, 18, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Panel/MusicVolume/MusicValueLabel, 16, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Panel/SFXVolume/SFXValueLabel, 16, UITheme.COLOR_TEXT_LIGHT)
+	
+	# Style separator
+	var sep_style = StyleBoxFlat.new()
+	sep_style.bg_color = UITheme.COLOR_BLUE_ACCENT
+	sep_style.content_margin_top = 1
+	sep_style.content_margin_bottom = 1
+	$Panel/Separator.add_stylebox_override("separator", sep_style)
+	
+	# Style controls grid labels
+	for child in $Panel/GridContainer.get_children():
+		if child is Label:
+			UITheme.style_label(child, 16, UITheme.COLOR_TEXT_LIGHT)
 
 func _on_MusicSlider_value_changed(value):
 	AudioManager.set_music_volume(value)

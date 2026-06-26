@@ -10,6 +10,18 @@ func _ready():
 	$Control/Panel/PlayAgainButton.connect("pressed", self, "_on_PlayAgainButton_pressed")
 	$Control/Panel/ExitButton.connect("pressed", self, "_on_ExitButton_pressed")
 	$Control/Panel/MinimizeButton.connect("pressed", self, "_on_MinimizeButton_pressed")
+	
+	# Apply teal/blue theme
+	UITheme.style_panel_dark($Control/Panel)
+	UITheme.style_label($Control/Panel/WinLabel, 30)
+	UITheme.style_label($Control/Panel/SubWinLabel, 20, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Control/Panel/TimeLabel, 24)
+	UITheme.style_label($Control/Panel/PBLabel, 18, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Control/Panel/HideHintLabel, 14, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_button($Control/Panel/PlayAgainButton)
+	UITheme.style_button($Control/Panel/ExitButton)
+	UITheme.style_button($Control/Panel/MinimizeButton, 16)
+	UITheme.style_label($Control/MinimizedHintLabel, 16, UITheme.COLOR_TEXT_LIGHT)
 
 func _input(event):
 	# Jika screen kemenangan sedang aktif, izinkan toggle dengan tombol H atau TAB

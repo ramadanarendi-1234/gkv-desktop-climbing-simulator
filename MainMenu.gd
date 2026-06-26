@@ -26,6 +26,15 @@ func _ready():
 			$Control/PBLabel.text = "Personal Best: %02d:%02d.%02d" % [mins, secs, msecs]
 			
 		$Control/AttemptLabel.text = "Total Attempts: " + str(RunHistory.get_run_count())
+	
+	# Apply teal/blue theme
+	UITheme.style_label($Control/TitleLabel, 48)
+	UITheme.style_label($Control/SubtitleLabel, 22, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Control/PBLabel, 18, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Control/AttemptLabel, 18, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_button($Control/StartButton)
+	UITheme.style_button($Control/SettingsButton)
+	UITheme.style_button($Control/ExitButton)
 
 # Fungsi ini akan berjalan saat tombol Start Game diklik
 func _on_StartButton_pressed():
