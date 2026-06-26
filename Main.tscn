@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://level/Mountain.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://level/SummitZone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://PauseMenu.tscn" type="PackedScene" id=7]
 [ext_resource path="res://WinScreen.tscn" type="PackedScene" id=8]
+[ext_resource path="res://IntroTutorial.tscn" type="PackedScene" id=9]
 
 
 [sub_resource type="ProceduralSky" id=1]
@@ -876,4 +877,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 40, -2.8 )
 [node name="PauseMenu" parent="." instance=ExtResource( 7 )]
 
 [node name="WinScreen" parent="." instance=ExtResource( 8 )]
+
+[node name="IntroTutorial" parent="." instance=ExtResource( 9 )]
 

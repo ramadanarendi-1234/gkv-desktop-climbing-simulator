@@ -24,6 +24,11 @@ func _input(event):
 			toggle_pause()
 
 func toggle_pause():
+	# Block pause if intro tutorial is open
+	var intro = get_parent().get_node_or_null("IntroTutorial")
+	if intro and intro.visible:
+		return
+	
 	# Blokir pause jika sedang di screen kemenangan
 	if get_parent() and "state" in get_parent() and "GameState" in get_parent():
 		if get_parent().state == get_parent().GameState.SUMMIT:

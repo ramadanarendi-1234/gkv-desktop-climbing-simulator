@@ -10,6 +10,7 @@ onready var movement_control = $Player/MovementControl
 onready var hud = $HUD
 onready var pause_menu = $PauseMenu
 onready var win_screen = $WinScreen
+onready var intro_tutorial = $IntroTutorial
 
 func _ready():
 	AudioManager.play_music("game")
@@ -26,6 +27,10 @@ func _ready():
 	var summit_zone = get_node_or_null("SummitZone")
 	if summit_zone:
 		summit_zone.connect("summit_reached", self, "_on_summit_reached")
+	
+	# Show intro tutorial when game starts
+	if intro_tutorial:
+		intro_tutorial.show_tutorial()
 
 func _process(delta):
 	# Fall detection for desktop mode (hitting the ground while climbing)
