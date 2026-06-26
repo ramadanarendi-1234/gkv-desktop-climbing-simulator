@@ -65,4 +65,3 @@ text = "Exit"
 
 [node name="SettingsMenu" parent="Control" instance=ExtResource( 3 )]
 visible = false
-
