@@ -4,10 +4,7 @@ func _ready():
 	# Memastikan kursor mouse muncul
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
-	# Start menu background music
-	AudioManager.play_music("menu")
-	
-	# Menghubungkan tombol langsung lewat kode (Pengganti klik panel kanan)
+	# Menghubungkan tombol langsung lewat kode
 	$Control/StartButton.connect("pressed", self, "_on_StartButton_pressed")
 	$Control/SettingsButton.connect("pressed", self, "_on_SettingsButton_pressed")
 	$Control/ExitButton.connect("pressed", self, "_on_ExitButton_pressed")
@@ -27,33 +24,74 @@ func _ready():
 			
 		$Control/AttemptLabel.text = "Total Attempts: " + str(RunHistory.get_run_count())
 	
-	# Apply teal/blue theme
+	# Apply background color and theme styles to existing elements
 	$Control/Background.color = Color(0.93, 0.95, 0.98, 1.0)
-	UITheme.style_label($Control/TitleLabel, 48, UITheme.COLOR_TEXT_DARK)
-	UITheme.style_label($Control/SubtitleLabel, 22, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_label($Control/PBLabel, 18, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_label($Control/AttemptLabel, 18, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_button($Control/StartButton)
 	UITheme.style_button($Control/SettingsButton)
 	UITheme.style_button($Control/ExitButton)
 
-# Fungsi ini akan berjalan saat tombol Start Game diklik
-func _on_StartButton_pressed():
-	AudioManager.play_sfx("click")
-	# Ganti "res://Lobbly.tscn" di bawah ini dengan nama file scene gameplay utamamu!
-	get_tree().change_scene("res://Main.tscn")
-
-# Fungsi ini akan berjalan saat tombol Settings diklik
-func _on_SettingsButton_pressed():
-	AudioManager.play_sfx("click")
-	# Hide menu buttons, show settings panel
-	$Control/TitleLabel.visible = false
-	$Control/SubtitleLabel.visible = false
+	# Hide menu elements for loading screen
+	$Control/GameLogo.visible = false
 	$Control/PBLabel.visible = false
 	$Control/AttemptLabel.visible = false
 	$Control/StartButton.visible = false
 	$Control/SettingsButton.visible = false
 	$Control/ExitButton.visible = false
+	$Control/DevLogoMain.visible = false
+	
+	# Start loading screen fade in & out using a Tween (5 seconds total)
+	$Control/LoadingScreen.visible = true
+	$Control/LoadingScreen.modulate.a = 0.0
+	
+	var tween = Tween.new()
+	add_child(tween)
+	# Fade in from 0 to 1 over 1.0s
+	tween.interpolate_property($Control/LoadingScreen, "modulate:a", 0.0, 1.0, 1.0, Tween.TRANS_SINE, Tween.EASE_OUT)
+	# Fade out from 1 to 0 over 1.0s starting at 4.0s
+	tween.interpolate_property($Control/LoadingScreen, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 4.0)
+	tween.start()
+	
+	# Create a 5s timer for loading complete
+	var timer = Timer.new()
+	timer.one_shot = true
+	timer.wait_time = 5.0
+	add_child(timer)
+	timer.connect("timeout", self, "_on_loading_complete")
+	timer.start()
+
+func _on_loading_complete():
+	# Hide loading screen completely
+	$Control/LoadingScreen.visible = false
+	
+	# Show menu elements
+	$Control/GameLogo.visible = true
+	$Control/PBLabel.visible = true
+	$Control/AttemptLabel.visible = true
+	$Control/StartButton.visible = true
+	$Control/SettingsButton.visible = true
+	$Control/ExitButton.visible = true
+	$Control/DevLogoMain.visible = true
+	
+	# Start menu background music
+	AudioManager.play_music("menu")
+
+# Fungsi ini akan berjalan saat tombol Start Game diklik
+func _on_StartButton_pressed():
+	AudioManager.play_sfx("click")
+	get_tree().change_scene("res://Main.tscn")
+
+# Fungsi ini akan berjalan saat tombol Settings diklik
+func _on_SettingsButton_pressed():
+	AudioManager.play_sfx("click")
+	$Control/GameLogo.visible = false
+	$Control/PBLabel.visible = false
+	$Control/AttemptLabel.visible = false
+	$Control/StartButton.visible = false
+	$Control/SettingsButton.visible = false
+	$Control/ExitButton.visible = false
+	$Control/DevLogoMain.visible = false
 	
 	$Control/SettingsMenu.visible = true
 
@@ -62,16 +100,18 @@ func _on_SettingsMenu_closed():
 	$Control/SettingsMenu.visible = false
 	
 	# Show menu buttons again
-	$Control/TitleLabel.visible = true
-	$Control/SubtitleLabel.visible = true
+	$Control/GameLogo.visible = true
 	$Control/PBLabel.visible = true
 	$Control/AttemptLabel.visible = true
 	$Control/StartButton.visible = true
 	$Control/SettingsButton.visible = true
 	$Control/ExitButton.visible = true
+	$Control/DevLogoMain.visible = true
 
 # Fungsi ini akan berjalan saat tombol Exit diklik
 func _on_ExitButton_pressed():
 	AudioManager.play_sfx("click")
-	get_tree().quit() # Perintah untuk menutup/keluar dari game
+	get_tree().quit()
+
+
 
