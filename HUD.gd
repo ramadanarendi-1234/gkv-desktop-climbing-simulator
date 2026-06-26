@@ -30,11 +30,11 @@ func _ready():
 	
 	# Style results panel
 	UITheme.style_panel_dark(results_panel)
-	UITheme.style_label(results_panel.get_node("Title"), 22)
-	UITheme.style_label(results_panel.get_node("TimeValue"), 24)
-	UITheme.style_label(results_panel.get_node("PBValue"), 18, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label(results_panel.get_node("AttemptValue"), 16, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label(results_panel.get_node("RestartLabel"), 14, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label(results_panel.get_node("Title"), 22, UITheme.COLOR_TEXT_DARK)
+	UITheme.style_label(results_panel.get_node("TimeValue"), 24, UITheme.COLOR_TEXT_DARK)
+	UITheme.style_label(results_panel.get_node("PBValue"), 18, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label(results_panel.get_node("AttemptValue"), 16, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label(results_panel.get_node("RestartLabel"), 14, UITheme.COLOR_TEXT_MUTED)
 
 func _process(delta):
 	if timer_running:

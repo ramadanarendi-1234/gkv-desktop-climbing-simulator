@@ -18,7 +18,7 @@ func _ready():
 	UITheme.style_panel_dark($Control/Panel)
 	UITheme.style_label_with_pill($Control/Panel/TitleLabel, UITheme.COLOR_TITLE_PILL, 26)
 	UITheme.style_label_with_pill($Control/Panel/BodyLabel, UITheme.COLOR_BODY_PILL, 17)
-	UITheme.style_label($Control/Panel/PageLabel, 18, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Control/Panel/PageLabel, 18, UITheme.COLOR_TEXT_MUTED)
 	$Control/Panel/Separator.visible = false
 	UITheme.style_button($Control/Panel/NextButton, 18)
 	UITheme.style_button($Control/Panel/BackButton, 18)

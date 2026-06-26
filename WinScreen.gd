@@ -13,11 +13,11 @@ func _ready():
 	
 	# Apply teal/blue theme
 	UITheme.style_panel_dark($Control/Panel)
-	UITheme.style_label($Control/Panel/WinLabel, 30)
-	UITheme.style_label($Control/Panel/SubWinLabel, 20, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label($Control/Panel/TimeLabel, 24)
-	UITheme.style_label($Control/Panel/PBLabel, 18, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label($Control/Panel/HideHintLabel, 14, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Control/Panel/WinLabel, 30, UITheme.COLOR_TEXT_DARK)
+	UITheme.style_label($Control/Panel/SubWinLabel, 20, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label($Control/Panel/TimeLabel, 24, UITheme.COLOR_TEXT_DARK)
+	UITheme.style_label($Control/Panel/PBLabel, 18, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label($Control/Panel/HideHintLabel, 14, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_button($Control/Panel/PlayAgainButton)
 	UITheme.style_button($Control/Panel/ExitButton)
 	UITheme.style_button($Control/Panel/MinimizeButton, 16)

@@ -26,15 +26,15 @@ func _ready():
 	
 	# Apply teal/blue theme
 	UITheme.style_panel_dark($Panel)
-	UITheme.style_label($Panel/TitleLabel, 26)
-	UITheme.style_label($Panel/ControlsLabel, 22)
+	UITheme.style_label($Panel/TitleLabel, 26, UITheme.COLOR_TEXT_DARK)
+	UITheme.style_label($Panel/ControlsLabel, 22, UITheme.COLOR_TEXT_DARK)
 	UITheme.style_button(back_button)
 	
 	# Style volume labels
-	UITheme.style_label($Panel/MusicVolume/Label, 18, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label($Panel/SFXVolume/Label, 18, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label($Panel/MusicVolume/MusicValueLabel, 16, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label($Panel/SFXVolume/SFXValueLabel, 16, UITheme.COLOR_TEXT_LIGHT)
+	UITheme.style_label($Panel/MusicVolume/Label, 18, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label($Panel/SFXVolume/Label, 18, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label($Panel/MusicVolume/MusicValueLabel, 16, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label($Panel/SFXVolume/SFXValueLabel, 16, UITheme.COLOR_TEXT_MUTED)
 	
 	# Style separator
 	var sep_style = StyleBoxFlat.new()
@@ -46,7 +46,7 @@ func _ready():
 	# Style controls grid labels
 	for child in $Panel/GridContainer.get_children():
 		if child is Label:
-			UITheme.style_label(child, 16, UITheme.COLOR_TEXT_LIGHT)
+			UITheme.style_label(child, 16, UITheme.COLOR_TEXT_MUTED)
 
 func _on_MusicSlider_value_changed(value):
 	AudioManager.set_music_volume(value)

@@ -28,10 +28,11 @@ func _ready():
 		$Control/AttemptLabel.text = "Total Attempts: " + str(RunHistory.get_run_count())
 	
 	# Apply teal/blue theme
-	UITheme.style_label($Control/TitleLabel, 48)
-	UITheme.style_label($Control/SubtitleLabel, 22, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label($Control/PBLabel, 18, UITheme.COLOR_TEXT_LIGHT)
-	UITheme.style_label($Control/AttemptLabel, 18, UITheme.COLOR_TEXT_LIGHT)
+	$Control/Background.color = Color(0.93, 0.95, 0.98, 1.0)
+	UITheme.style_label($Control/TitleLabel, 48, UITheme.COLOR_TEXT_DARK)
+	UITheme.style_label($Control/SubtitleLabel, 22, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label($Control/PBLabel, 18, UITheme.COLOR_TEXT_MUTED)
+	UITheme.style_label($Control/AttemptLabel, 18, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_button($Control/StartButton)
 	UITheme.style_button($Control/SettingsButton)
 	UITheme.style_button($Control/ExitButton)

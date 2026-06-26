@@ -15,7 +15,7 @@ func _ready():
 	
 	# Apply teal/blue theme
 	UITheme.style_panel_dark($Control/Panel)
-	UITheme.style_label($Control/Panel/PauseLabel, 32)
+	UITheme.style_label($Control/Panel/PauseLabel, 32, UITheme.COLOR_TEXT_DARK)
 	UITheme.style_button($Control/Panel/ResumeButton)
 	UITheme.style_button($Control/Panel/RestartButton)
 	UITheme.style_button($Control/Panel/SettingsButton)
