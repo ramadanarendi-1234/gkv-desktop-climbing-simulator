@@ -15,6 +15,11 @@ func _input(event):
 		toggle_pause()
 
 func toggle_pause():
+	# Blokir pause jika sedang di screen kemenangan
+	if get_parent() and "state" in get_parent() and "GameState" in get_parent():
+		if get_parent().state == get_parent().GameState.SUMMIT:
+			return
+
 	# Membalikkan status pause game
 	var new_pause_state = !get_tree().paused
 	get_tree().paused = new_pause_state
@@ -31,7 +36,11 @@ func _on_ResumeButton_pressed():
 
 func _on_RestartButton_pressed():
 	get_tree().paused = false
-	get_tree().reload_current_scene() # Ulangi level
+	self.visible = false
+	if get_parent() and get_parent().has_method("reset_run"):
+		get_parent().reset_run(true)
+	else:
+		get_tree().reload_current_scene() # Ulangi level
 
 func _on_ExitButton_pressed():
 	get_tree().paused = false

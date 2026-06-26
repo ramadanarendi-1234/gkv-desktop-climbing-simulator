@@ -3,9 +3,13 @@ extends Spatial
 enum GameState { WAITING, CLIMBING, SUMMIT, FELL }
 var state = GameState.WAITING
 
+export var summit_height = 39.0
+
 onready var player = $Player
 onready var movement_control = $Player/MovementControl
 onready var hud = $HUD
+onready var pause_menu = $PauseMenu
+onready var win_screen = $WinScreen
 
 func _ready():
 	if movement_control:
@@ -29,11 +33,13 @@ func _process(delta):
 			var desktop_climb = $Player.get_node_or_null("DesktopClimb")
 			if desktop_climb and not desktop_climb.is_climbing:
 				_fail_run(false)
+				return
+		
+		# Height fallback for summit detection (desktop mode)
+		if player and player.global_transform.origin.y >= summit_height:
+			_on_summit_reached()
 
 func _input(event):
-	if event is InputEventKey and event.scancode == KEY_ESCAPE:
-		get_tree().quit()
-		
 	if event is InputEventKey and event.scancode == KEY_R and event.pressed:
 		reset_run(true)
 		
@@ -69,6 +75,8 @@ func _on_summit_reached():
 			var new_pb = RunHistory.get_personal_best()
 			var is_new_pb = (prev_pb < 0) or (new_pb < prev_pb)
 			hud.show_results(is_new_pb)
+			if win_screen:
+				win_screen.show_win(hud.format_time(hud.current_time), is_new_pb)
 
 func reset_run(teleport = true):
 	state = GameState.WAITING
@@ -88,3 +96,9 @@ func reset_run(teleport = true):
 		
 	if hud:
 		hud.reset_timer()
+		
+	if win_screen:
+		win_screen.visible = false
+		
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+

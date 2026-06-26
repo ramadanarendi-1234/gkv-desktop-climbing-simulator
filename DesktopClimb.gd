@@ -1,10 +1,10 @@
 extends Spatial
 
-export var climb_distance = 1.5
+export var climb_distance = 2.5
 export var climb_speed = 3.0
 
-var left_hand_hold : Spatial = null
-var right_hand_hold : Spatial = null
+var left_hand_hold: Spatial = null
+var right_hand_hold: Spatial = null
 
 var is_climbing = false
 var has_grabbed_once = false
@@ -44,7 +44,7 @@ func _process(delta):
 	var handholds = handholds_node.get_children()
 	
 	var cam_pos = camera.global_transform.origin
-	var cam_forward = -camera.global_transform.basis.z.normalized()
+	var cam_forward = - camera.global_transform.basis.z.normalized()
 	
 	var best_hold = null
 	var best_score = -1.0
