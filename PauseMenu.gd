@@ -5,9 +5,9 @@ func _ready():
 	self.visible = false
 	
 	# Hubungkan tombol otomatis lewat kode
-	$Control/ResumeButton.connect("pressed", self, "_on_ResumeButton_pressed")
-	$Control/RestartButton.connect("pressed", self, "_on_RestartButton_pressed")
-	$Control/ExitButton.connect("pressed", self, "_on_ExitButton_pressed")
+	$Control/Panel/ResumeButton.connect("pressed", self, "_on_ResumeButton_pressed")
+	$Control/Panel/RestartButton.connect("pressed", self, "_on_RestartButton_pressed")
+	$Control/Panel/ExitButton.connect("pressed", self, "_on_ExitButton_pressed")
 
 func _input(event):
 	# Jika menekan tombol ESC (ui_cancel)
