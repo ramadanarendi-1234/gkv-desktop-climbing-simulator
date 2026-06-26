@@ -40,6 +40,7 @@ func start_timer():
 
 func stop_timer():
 	timer_running = false
+	objective_label.text = "You reached the summit!"
 
 func reset_timer():
 	timer_running = false
