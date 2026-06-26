@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
+
+[sub_resource type="DynamicFontData" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+font_data = SubResource( 1 )
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -12,7 +17,8 @@ anchor_bottom = 1.0
 [node name="TitleLabel" type="Label" parent="Control"]
 margin_left = 50.0
 margin_top = 50.0
-text = "CLIMB THE PEAK"
+custom_fonts/font = SubResource( 2 )
+text = "LIMB THE PEAK"
 
 [node name="SubtitleLabel" type="Label" parent="Control"]
 margin_left = 54.0

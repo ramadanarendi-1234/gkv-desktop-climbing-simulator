@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://WinScreen.gd" type="Script" id=1]
+
+[node name="WinScreen" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Panel" type="Panel" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -115.5
+margin_top = -104.0
+margin_right = 115.5
+margin_bottom = 104.0
+
+[node name="WinLabel" type="Label" parent="Control/Panel"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "CONGRATULATIONS!"
+
+[node name="SubWinLabel" type="Label" parent="Control/Panel"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "You Reached The Summit!"
+
+[node name="TimeLabel" type="Label" parent="Control/Panel"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Final Time: 00:00
+"
+
+[node name="PlayAgainButton" type="Button" parent="Control/Panel"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Play Again"
+
+[node name="ExitButton" type="Button" parent="Control/Panel"]
+margin_right = 12.0
+margin_bottom = 20.0
+text = "Exit to Menu"
