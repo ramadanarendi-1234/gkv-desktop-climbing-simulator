@@ -96,20 +96,24 @@ func _process(delta):
 	if q_pressed:
 		if not left_hand_hold and best_hold:
 			left_hand_hold = best_hold
+			AudioManager.play_sfx("grab")
 			_on_grab()
 	elif left_hand_hold:
 		if left_hand_hold.has_method("unhighlight"):
 			left_hand_hold.unhighlight()
 		left_hand_hold = null
+		AudioManager.play_sfx("release")
 		
 	if Input.is_key_pressed(KEY_E):
 		if not right_hand_hold and best_hold:
 			right_hand_hold = best_hold
+			AudioManager.play_sfx("grab")
 			_on_grab()
 	elif right_hand_hold:
 		if right_hand_hold.has_method("unhighlight"):
 			right_hand_hold.unhighlight()
 		right_hand_hold = null
+		AudioManager.play_sfx("release")
 		
 	is_climbing = (left_hand_hold != null or right_hand_hold != null)
 	

@@ -52,6 +52,7 @@ func show_win(time_string: String, is_new_pb: bool):
 			$Control/Panel/PBLabel.text = "PB: %02d:%02d.%02d" % [mins, secs, msecs]
 
 func _on_PlayAgainButton_pressed():
+	AudioManager.play_sfx("click")
 	self.visible = false
 	if get_parent() and get_parent().has_method("reset_run"):
 		get_parent().reset_run(true)
@@ -59,9 +60,11 @@ func _on_PlayAgainButton_pressed():
 		get_tree().reload_current_scene()
 
 func _on_ExitButton_pressed():
+	AudioManager.play_sfx("click")
 	get_tree().change_scene("res://MainMenu.tscn")
 
 func _on_MinimizeButton_pressed():
+	AudioManager.play_sfx("click")
 	is_minimized = true
 	_update_ui_state()
 

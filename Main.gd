@@ -12,6 +12,8 @@ onready var pause_menu = $PauseMenu
 onready var win_screen = $WinScreen
 
 func _ready():
+	AudioManager.play_music("game")
+	
 	if movement_control:
 		movement_control.connect("first_grab", self, "_on_first_grab")
 		movement_control.connect("player_fell", self, "_on_player_fell")
@@ -62,12 +64,14 @@ func _on_player_fell():
 func _fail_run(teleport: bool):
 	if state == GameState.CLIMBING:
 		state = GameState.FELL
+		AudioManager.play_sfx("fall")
 		RunHistory.save_run(hud.current_time, false)
 	reset_run(teleport)
 
 func _on_summit_reached():
 	if state == GameState.CLIMBING:
 		state = GameState.SUMMIT
+		AudioManager.play_sfx("win")
 		if hud:
 			hud.stop_timer()
 			var prev_pb = RunHistory.get_personal_best()
