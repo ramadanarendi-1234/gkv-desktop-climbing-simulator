@@ -29,7 +29,7 @@ func _setup_kb(player):
 	shape.rotation_degrees.x = 90
 	kb.add_child(shape)
 	kb.collision_mask = 1
-	kb.collision_layer = 0
+	kb.collision_layer = 1
 	get_tree().current_scene.add_child(kb)
 	kb.global_transform.origin = player.global_transform.origin
 

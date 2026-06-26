@@ -3,7 +3,7 @@ extends Spatial
 enum GameState { WAITING, CLIMBING, SUMMIT, FELL }
 var state = GameState.WAITING
 
-export var summit_height = 39.0
+export var summit_height = 38.0
 
 onready var player = $Player
 onready var movement_control = $Player/MovementControl
