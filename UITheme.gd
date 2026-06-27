@@ -7,6 +7,8 @@ extends Node
 # Usage: UITheme.style_button(button) in any scene's _ready()
 # ============================================================
 
+var is_first_boot = true
+
 # === COLOR PALETTE ===
 var COLOR_TEAL = Color(0.10, 0.54, 0.62, 1.0)
 var COLOR_TEAL_LIGHT = Color(0.15, 0.63, 0.72, 1.0)

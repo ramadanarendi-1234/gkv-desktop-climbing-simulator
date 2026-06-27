@@ -2,6 +2,7 @@ extends Spatial
 
 enum GameState { WAITING, CLIMBING, SUMMIT, FELL }
 var state = GameState.WAITING
+var max_height_reached = 0.0
 
 export var summit_height = 38.0
 
@@ -56,22 +57,39 @@ func _input(event):
 func _on_first_grab():
 	if state == GameState.WAITING:
 		state = GameState.CLIMBING
+		AudioManager.stop_sfx("fall")
 		if hud:
 			hud.start_timer()
 
 func _on_player_height_changed(y):
 	if hud:
 		hud.update_height(y)
+	if state == GameState.CLIMBING:
+		if y > max_height_reached:
+			max_height_reached = y
+			print("DEBUG Main.gd: max_height_reached updated to: ", max_height_reached)
 
 func _on_player_fell():
+	# If player already reached the summit, don't trigger fall resets or sounds
+	if state == GameState.SUMMIT:
+		return
+	if state == GameState.CLIMBING:
+		max_height_reached = 999.0 # Force height check to pass for void falls
 	_fail_run(true)
 
 func _fail_run(teleport: bool):
+	print("DEBUG Main.gd: _fail_run called. state: ", state, ", max_height_reached: ", max_height_reached)
 	if state == GameState.CLIMBING:
 		state = GameState.FELL
-		AudioManager.play_sfx("fall")
+		# Only play fall SFX if the player reached a height > 2.0m during this run
+		if max_height_reached > 2.0:
+			print("DEBUG Main.gd: playing fall SFX!")
+			AudioManager.play_sfx("fall")
+		else:
+			print("DEBUG Main.gd: max_height_reached too low (", max_height_reached, "), not playing fall SFX.")
 		RunHistory.save_run(hud.current_time, false)
-	reset_run(teleport)
+	# Call reset_run but do NOT stop the fall sound immediately so it can play
+	reset_run(teleport, false)
 
 func _on_summit_reached():
 	if state == GameState.CLIMBING:
@@ -87,8 +105,11 @@ func _on_summit_reached():
 			if win_screen:
 				win_screen.show_win(hud.format_time(hud.current_time), is_new_pb)
 
-func reset_run(teleport = true):
+func reset_run(teleport = true, stop_fall_sound = true):
 	state = GameState.WAITING
+	max_height_reached = 0.0
+	if stop_fall_sound:
+		AudioManager.stop_sfx("fall")
 	if movement_control:
 		movement_control.force_release()
 		movement_control.reset_position(teleport)
@@ -96,8 +117,17 @@ func reset_run(teleport = true):
 	var desktop_climb = $Player.get_node_or_null("DesktopClimb")
 	if desktop_climb:
 		desktop_climb.has_grabbed_once = false
+		# Unhighlight currently held and last highlighted handholds before clearing
+		if desktop_climb.left_hand_hold and desktop_climb.left_hand_hold.has_method("unhighlight"):
+			desktop_climb.left_hand_hold.unhighlight()
+		if desktop_climb.right_hand_hold and desktop_climb.right_hand_hold.has_method("unhighlight"):
+			desktop_climb.right_hand_hold.unhighlight()
+		if desktop_climb.last_highlighted and desktop_climb.last_highlighted.has_method("unhighlight"):
+			desktop_climb.last_highlighted.unhighlight()
+			
 		desktop_climb.left_hand_hold = null
 		desktop_climb.right_hand_hold = null
+		desktop_climb.last_highlighted = null
 		
 	var desktop_move = $Player.get_node_or_null("DesktopMovement")
 	if desktop_move and desktop_move.kb and teleport:

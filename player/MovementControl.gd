@@ -51,6 +51,10 @@ func _process(delta):
 		var is_holding = left_hand_node.get_is_holding()
 		if left_hand_is_holding != is_holding:
 			left_hand_is_holding = is_holding
+			if left_hand_is_holding:
+				AudioManager.play_sfx("grab")
+			else:
+				AudioManager.play_sfx("release")
 		elif left_hand_is_holding:
 			# we skip the first frame we're holding because we don't have our last position
 			delta_movement += left_hand_node.global_transform.origin - left_hand_last_position
@@ -61,6 +65,10 @@ func _process(delta):
 		var is_holding = right_hand_node.get_is_holding()
 		if right_hand_is_holding != is_holding:
 			right_hand_is_holding = is_holding
+			if right_hand_is_holding:
+				AudioManager.play_sfx("grab")
+			else:
+				AudioManager.play_sfx("release")
 		elif right_hand_is_holding:
 			# we skip the first frame we're holding because we don't have our last position
 			delta_movement += right_hand_node.global_transform.origin - right_hand_last_position

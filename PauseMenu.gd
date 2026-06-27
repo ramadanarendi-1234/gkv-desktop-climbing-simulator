@@ -37,11 +37,6 @@ func toggle_pause():
 	if intro and intro.visible:
 		return
 	
-	# Blokir pause jika sedang di screen kemenangan
-	if get_parent() and "state" in get_parent() and "GameState" in get_parent():
-		if get_parent().state == get_parent().GameState.SUMMIT:
-			return
-
 	# Membalikkan status pause game
 	var new_pause_state = !get_tree().paused
 	get_tree().paused = new_pause_state

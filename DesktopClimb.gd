@@ -57,7 +57,7 @@ func _process(delta):
 			var dir_to_hold = (hold_pos - cam_pos).normalized()
 			var dot = cam_forward.dot(dir_to_hold)
 			
-			if dot > 0.8: # Looking roughly at it
+			if dot > 0.7: # Looking roughly at it
 				var score = dot * 10.0 - dist
 				if score > best_score:
 					best_score = score

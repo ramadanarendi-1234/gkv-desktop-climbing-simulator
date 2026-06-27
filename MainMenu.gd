@@ -32,34 +32,50 @@ func _ready():
 	UITheme.style_button($Control/SettingsButton)
 	UITheme.style_button($Control/ExitButton)
 
-	# Hide menu elements for loading screen
-	$Control/GameLogo.visible = false
-	$Control/PBLabel.visible = false
-	$Control/AttemptLabel.visible = false
-	$Control/StartButton.visible = false
-	$Control/SettingsButton.visible = false
-	$Control/ExitButton.visible = false
-	$Control/DevLogoMain.visible = false
-	
-	# Start loading screen fade in & out using a Tween (5 seconds total)
-	$Control/LoadingScreen.visible = true
-	$Control/LoadingScreen.modulate.a = 0.0
-	
-	var tween = Tween.new()
-	add_child(tween)
-	# Fade in from 0 to 1 over 1.0s
-	tween.interpolate_property($Control/LoadingScreen, "modulate:a", 0.0, 1.0, 1.0, Tween.TRANS_SINE, Tween.EASE_OUT)
-	# Fade out from 1 to 0 over 1.0s starting at 4.0s
-	tween.interpolate_property($Control/LoadingScreen, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 4.0)
-	tween.start()
-	
-	# Create a 5s timer for loading complete
-	var timer = Timer.new()
-	timer.one_shot = true
-	timer.wait_time = 5.0
-	add_child(timer)
-	timer.connect("timeout", self, "_on_loading_complete")
-	timer.start()
+	if UITheme.is_first_boot:
+		UITheme.is_first_boot = false
+		
+		# Hide menu elements for loading screen
+		$Control/GameLogo.visible = false
+		$Control/PBLabel.visible = false
+		$Control/AttemptLabel.visible = false
+		$Control/StartButton.visible = false
+		$Control/SettingsButton.visible = false
+		$Control/ExitButton.visible = false
+		$Control/DevLogoMain.visible = false
+		
+		# Start loading screen fade in & out using a Tween (5 seconds total)
+		$Control/LoadingScreen.visible = true
+		$Control/LoadingScreen.modulate.a = 0.0
+		
+		var tween = Tween.new()
+		add_child(tween)
+		# Fade in from 0 to 1 over 1.0s
+		tween.interpolate_property($Control/LoadingScreen, "modulate:a", 0.0, 1.0, 1.0, Tween.TRANS_SINE, Tween.EASE_OUT)
+		# Fade out from 1 to 0 over 1.0s starting at 4.0s
+		tween.interpolate_property($Control/LoadingScreen, "modulate:a", 1.0, 0.0, 1.0, Tween.TRANS_SINE, Tween.EASE_IN_OUT, 4.0)
+		tween.start()
+		
+		# Create a 5s timer for loading complete
+		var timer = Timer.new()
+		timer.one_shot = true
+		timer.wait_time = 5.0
+		add_child(timer)
+		timer.connect("timeout", self, "_on_loading_complete")
+		timer.start()
+	else:
+		# Directly show menu elements
+		$Control/LoadingScreen.visible = false
+		$Control/GameLogo.visible = true
+		$Control/PBLabel.visible = true
+		$Control/AttemptLabel.visible = true
+		$Control/StartButton.visible = true
+		$Control/SettingsButton.visible = true
+		$Control/ExitButton.visible = true
+		$Control/DevLogoMain.visible = true
+		
+		# Start music directly
+		AudioManager.play_music("menu")
 
 func _on_loading_complete():
 	# Hide loading screen completely
