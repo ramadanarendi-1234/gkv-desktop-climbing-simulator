@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://SettingsMenu.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/logos/game logo.svg" type="Texture" id=3]
 [ext_resource path="res://assets/logos/Dev Logo.svg" type="Texture" id=4]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=5]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -120,3 +121,7 @@ margin_bottom = 250.0
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 6
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+start_passthrough = true
+

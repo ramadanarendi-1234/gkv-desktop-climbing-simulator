@@ -26,6 +26,14 @@ func _ready():
 	
 	# Apply background color and theme styles to existing elements
 	$Control/Background.color = Color(0.93, 0.95, 0.98, 1.0)
+	
+	# Check if VR mode is active
+	var vr_active = false
+	if has_node("Player/VRDesktopSwitch"):
+		vr_active = get_node("Player/VRDesktopSwitch").is_vr_mode
+	if vr_active:
+		$Control/Background.visible = false
+		
 	UITheme.style_label($Control/PBLabel, 18, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_label($Control/AttemptLabel, 18, UITheme.COLOR_TEXT_MUTED)
 	UITheme.style_button($Control/StartButton)
