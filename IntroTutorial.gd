@@ -62,6 +62,14 @@ func show_tutorial():
 	get_tree().paused = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_update_page()
+	
+	# Fade in the tutorial panel smoothly after the camera fade-in has progressed (1.2s delay)
+	$Control.modulate.a = 0.0
+	var tween = Tween.new()
+	tween.pause_mode = Node.PAUSE_MODE_PROCESS
+	add_child(tween)
+	tween.interpolate_property($Control, "modulate:a", 0.0, 1.0, 0.6, Tween.TRANS_SINE, Tween.EASE_OUT, 1.2)
+	tween.start()
 
 func _update_page():
 	var page = pages[current_page]
@@ -97,6 +105,15 @@ func _on_SkipButton_pressed():
 	_close_tutorial()
 
 func _close_tutorial():
+	# Fade out the tutorial panel smoothly
+	var tween = Tween.new()
+	tween.pause_mode = Node.PAUSE_MODE_PROCESS
+	add_child(tween)
+	tween.interpolate_property($Control, "modulate:a", $Control.modulate.a, 0.0, 0.4, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	tween.start()
+	yield(tween, "tween_all_completed")
+	tween.queue_free()
+	
 	self.visible = false
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

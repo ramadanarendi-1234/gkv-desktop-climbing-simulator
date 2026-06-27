@@ -124,4 +124,3 @@ stretch_mode = 6
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 start_passthrough = true
-

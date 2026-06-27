@@ -104,6 +104,21 @@ func _on_loading_complete():
 # Fungsi ini akan berjalan saat tombol Start Game diklik
 func _on_StartButton_pressed():
 	AudioManager.play_sfx("click")
+	
+	# Create a black ColorRect overlay for fading out
+	var fade_rect = ColorRect.new()
+	fade_rect.color = Color(0, 0, 0, 1)
+	fade_rect.anchor_right = 1.0
+	fade_rect.anchor_bottom = 1.0
+	fade_rect.modulate.a = 0.0
+	$Control.add_child(fade_rect)
+	
+	var tween = Tween.new()
+	add_child(tween)
+	tween.interpolate_property(fade_rect, "modulate:a", 0.0, 1.0, 0.5, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	tween.start()
+	
+	yield(tween, "tween_all_completed")
 	get_tree().change_scene("res://Main.tscn")
 
 # Fungsi ini akan berjalan saat tombol Settings diklik
